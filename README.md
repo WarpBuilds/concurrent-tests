@@ -13,6 +13,10 @@
 
 - Native sharding: https://playwright.dev/docs/test-sharding
 
+## Cypress 🚧
+
+- Native parallelization: https://docs.cypress.io/guides/cloud/smart-orchestration/parallelization#Grouping-to-label-parallelization
+
 ## Pytest 🚧
 
 - 3rd party package available: https://github.com/jerry-git/pytest-split
