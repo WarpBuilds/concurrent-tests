@@ -1,6 +1,8 @@
 on:
   workflow_dispatch:
 
+name: Jest Tests
+
 jobs:
   concurrent-test:
     name: Jest Tests (Concurrent)
