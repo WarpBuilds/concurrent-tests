@@ -1,0 +1,37 @@
+on:
+  workflow_dispatch:
+
+jobs:
+  concurrent-test:
+    name: Jest Tests (Concurrent)
+    runs-on: warp-ubuntu-latest-x64-4x
+    defaults:
+      run:
+        working-directory: examples/jest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        shardCount: [2]
+        i: [1, 2,]
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v3
+
+      - name: Run Jest tests
+        run: npx jest --shard=${{ matrix.i }}/${{ matrix.shardCount }}
+
+  sequential-test:
+    name: Jest Tests (Sequential)
+    runs-on: warp-ubuntu-latest-x64-4x
+    defaults:
+      run:
+        working-directory: examples/jest
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v3
+
+      - name: Run Jest tests
+        run: npx jest

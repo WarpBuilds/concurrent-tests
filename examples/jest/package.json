@@ -1,0 +1,20 @@
+{
+  "name": "jest-concurrent-test-example",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "keywords": [
+    "jest",
+    "warp",
+    "shard",
+    "concurrent"
+  ],
+  "author": "WarpBuilds",
+  "license": "ISC",
+  "devDependencies": {
+    "jest": "^29.7.0"
+  },
+  "scripts": {
+    "test": "jest"
+  }
+}
