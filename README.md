@@ -1,6 +1,11 @@
-# Concurrent jobs
+# Notes
+
+- GitHub limitations: https://docs.github.com/en/actions/learn-github-actions/usage-limits-billing-and-administration
+
+# Concurrent tests
 
 ✅ Explored & example setup
+
 🚧 More exploration needed
 
 ## Jest ✅
@@ -8,6 +13,7 @@
 - Native sharding: https://jestjs.io/docs/cli#--shard
 - Default sharding is alphabetical
 - If running a custom test sequencer, implement a shard method: https://jestjs.io/docs/configuration#testsequencer-string
+- [3 minutes vs. 30 seconds](https://github.com/WarpBuilds/concurrent-tests/actions/runs/8733327759)
 
 ## Playwright 🚧
 
