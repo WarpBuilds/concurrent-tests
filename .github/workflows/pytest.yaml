@@ -1,5 +1,4 @@
 name: Pytest Tests
-
 on: workflow_dispatch
 
 jobs:

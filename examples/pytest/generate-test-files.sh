@@ -17,9 +17,8 @@ EOF
 }
 
 n=$1
-for i in $(seq $n); do
-    test_file_name="tests/test_$i.py"
-    rm -f $test_file_name
+rm -f tests/test_*.py
 
-    code_gen $i > $test_file_name
+for i in $(seq -f "%03g" $n); do
+    code_gen $i > "tests/test_$i.py"
 done
