@@ -23,7 +23,7 @@
 
 - Native parallelization: https://docs.cypress.io/guides/cloud/smart-orchestration/parallelization#Grouping-to-label-parallelization
 
-## Pytest 🚧
+## Pytest ✅
 
 - 3rd party package available: https://github.com/jerry-git/pytest-split
 - https://github.com/jerry-git/pytest-split-gh-actions-demo/blob/master/.github/workflows/test.yml

@@ -1,6 +1,6 @@
-const { sleep, sum } = require('..');
+const { slowSum } = require('..');
 
 test("should sleep for 5 seconds (2)", async () => {
-    await sleep(5000)
-    expect(sum(95, 20)).toBe(115)
+    const result = await slowSum(14, 31);
+    expect(result).toBe(45)
 }, 10000)

@@ -1,7 +1,10 @@
-function sum(a, b) {
+const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
+async function slowSum(a, b) {
+    await sleep(500);
+
     return a + b;
 }
 
-const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
-module.exports = { sum, sleep }
+module.exports = { slowSum }

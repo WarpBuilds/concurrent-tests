@@ -1,7 +1,5 @@
-from myproject import main
-from time import sleep
+from myproject import myproject
 
 def test_sum():
-    sleep(1)
-    assert main.mysum(51, 68) == 119
+    assert myproject.slow_sum(0, 17) == 17
 

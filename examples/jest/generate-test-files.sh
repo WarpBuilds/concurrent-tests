@@ -8,11 +8,11 @@ code_gen() {
     local sum=$(echo $n1 + $n2 | bc)
 
     cat <<EOF
-const { sleep, sum } = require('..');
+const { slowSum } = require('..');
 
 test("should sleep for 5 seconds ($1)", async () => {
-    await sleep(5000)
-    expect(sum($n1, $n2)).toBe($sum)
+    const result = await slowSum($n1, $n2);
+    expect(result).toBe($sum)
 }, 10000)
 EOF
 }

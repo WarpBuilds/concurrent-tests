@@ -8,12 +8,10 @@ code_gen() {
     local sum=$(echo $n1 + $n2 | bc)
 
     cat <<EOF
-from myproject import main
-from time import sleep
+from myproject import myproject
 
 def test_sum():
-    sleep(1)
-    assert main.mysum($n1, $n2) == $sum
+    assert myproject.slow_sum($n1, $n2) == $sum
 
 EOF
 }
