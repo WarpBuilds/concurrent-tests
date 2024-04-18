@@ -18,6 +18,7 @@
 ## Playwright ✅
 
 - Native sharding: https://playwright.dev/docs/test-sharding
+- Container approach: https://github.com/microsoft/playwright/issues/23388
 
 ## Cypress 🚧
 
