@@ -1,0 +1,45 @@
+name: Pytest Tests
+
+on: workflow_dispatch
+
+jobs:
+  concurrent-test:
+    name: Pytest Tests (Concurrent)
+    runs-on: warp-ubuntu-latest-x64-4x
+    defaults:
+      run:
+        working-directory: examples/pytest
+    strategy:
+      fail-fast: false
+      matrix:
+        splitCount: [10]
+        group: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+      - run: pip install pytest pytest-split
+
+      - name: Generate 100 Pytest test files
+        run: bash ./generate-test-files.sh 100
+
+      - name: Run pytest
+        run: pytest --splits ${{ matrix.splitCount }} --group ${{ matrix.group }}
+
+  sequential-test:
+    name: Pytest Tests (Sequential)
+    runs-on: warp-ubuntu-latest-x64-4x
+    defaults:
+      run:
+        working-directory: examples/pytest
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+      - run: pip install pytest
+        
+      - name: Generate 100 Pytest test files
+        run: bash ./generate-test-files.sh 100
+
+      - name: Run pytest
+        run: pytest

@@ -17,7 +17,7 @@
 
 ## Playwright 🚧
 
-- Native sharding: https://playwright.dev/docs/test-sharding 0
+- Native sharding: https://playwright.dev/docs/test-sharding
 
 ## Cypress 🚧
 
