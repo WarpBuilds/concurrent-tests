@@ -2,10 +2,8 @@
 
 # Jest
 node_modules/
-*.test.js
 
 # Pytest
 __pycache__/
 .pytest_cache/
 venv
-test_*.py

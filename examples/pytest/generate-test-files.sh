@@ -8,17 +8,20 @@ code_gen() {
     local sum=$(echo $n1 + $n2 | bc)
 
     cat <<EOF
-from main import mysum
+from myproject import main
 from time import sleep
 
 def test_sum():
     sleep(1)
-    assert mysum($n1, $n2) == $sum
+    assert main.mysum($n1, $n2) == $sum
 
 EOF
 }
 
 n=$1
 for i in $(seq $n); do
-    code_gen $i > "test_$i.py"
+    test_file_name="tests/test_$i.py"
+    rm -f $test_file_name
+
+    code_gen $i > $test_file_name
 done

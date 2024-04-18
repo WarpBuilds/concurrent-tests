@@ -20,9 +20,6 @@ jobs:
       - uses: actions/setup-python@v5
       - run: pip install pytest pytest-split
 
-      - name: Generate 100 Pytest test files
-        run: bash ./generate-test-files.sh 100
-
       - name: Run pytest
         run: pytest --splits ${{ matrix.splitCount }} --group ${{ matrix.group }}
 
@@ -37,9 +34,6 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
       - run: pip install pytest
-        
-      - name: Generate 100 Pytest test files
-        run: bash ./generate-test-files.sh 100
 
       - name: Run pytest
         run: pytest

@@ -8,7 +8,7 @@ code_gen() {
     local sum=$(echo $n1 + $n2 | bc)
 
     cat <<EOF
-const { sleep, sum } = require('.');
+const { sleep, sum } = require('..');
 
 test("should sleep for 5 seconds ($1)", async () => {
     await sleep(5000)
@@ -19,5 +19,8 @@ EOF
 
 n=$1
 for i in $(seq $n); do
-    code_gen $i > "sleep-$i.test.js"
+    test_file_name="tests/$i.test.js"
+    rm -f $test_file_name
+
+    code_gen $i > $test_file_name
 done

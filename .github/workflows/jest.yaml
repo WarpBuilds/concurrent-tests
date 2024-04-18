@@ -21,9 +21,6 @@ jobs:
       - uses: actions/setup-node@v4
       - run: npm ci
 
-      - name: Generate 100 Jest test files
-        run: bash ./generate-test-files.sh 100
-
       - name: Run Jest tests
         run: npx jest --shard=${{ matrix.shardIndex }}/${{ matrix.shardCount }}
 
@@ -38,9 +35,6 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
       - run: npm ci
-        
-      - name: Generate 100 Jest test files
-        run: bash ./generate-test-files.sh 100
 
       - name: Run Jest tests
         run: npx jest
