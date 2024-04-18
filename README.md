@@ -15,7 +15,7 @@
 - If running a custom test sequencer, implement a shard method: https://jestjs.io/docs/configuration#testsequencer-string
 - [3 minutes vs. 30 seconds](https://github.com/WarpBuilds/concurrent-tests/actions/runs/8733327759)
 
-## Playwright 🚧
+## Playwright ✅
 
 - Native sharding: https://playwright.dev/docs/test-sharding
 
