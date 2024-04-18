@@ -3,6 +3,9 @@ import { test, expect } from '@playwright/test';
 test('has title', async ({ page }) => {
     await page.goto('https://warpbuild.com/');
 
+    // Manual wait to make the tests last longer.
+    await page.waitForTimeout(5000);
+
     // Expect a title "to contain" a substring.
     await expect(page).toHaveTitle(/WarpBuild/);
 });
