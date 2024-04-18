@@ -38,7 +38,7 @@ jobs:
 
 Playwright is a popular end-to-end automation and testing framework for web applications. Playwright has [native support for test sharding](https://playwright.dev/docs/test-sharding) using the `--shard` option. Just like we saw with Jest earlier, rhe `--shard` option takes an argument in the form of `shardIdx/shardCount`. Where `shardIdx` is the index of the shard and `shardCount` is the total number of shards.
 
-Sharding the tests improve the time from around 10 minutes to 1 minute 25 seconds for a [dummy test suite run](https://github.com/WarpBuilds/concurrent-tests/actions/runs/8740435954).
+Sharding the tests improve the time from around 5 minutes 26 seconds to 1 minute 25 seconds for a [dummy test suite run](https://github.com/WarpBuilds/concurrent-tests/actions/runs/8740435954).
 
 The setup is very similar to that of Jest:
 
@@ -105,7 +105,7 @@ All of the workflows, dummy tests used and their runs can be found in the our [c
 | Test Framework | Default | Sharded | Improvement |
 | -------------- | ------- | ------- | ----------- |
 | Jest           | 3m      | 30s     | 6x          |
-| Playwright     | 10m     | 1m 25s  | 7x          |
+| Playwright     | 5m 26s  | 1m 25s  | 3.8x        |
 | Pytest         | 8m 20s  | 50s     | 10x         |
 
 > [!NOTE]: A very important thing to keep in mind before sharding your tests is the jobs run **all** the steps inside the matrix again. This includes dependency installs, fetching thrid party actions, etc. These steps could add significant overhead which might not be worth it for small test suites and in some cases, might even slow down the overall run time. It is important to benchmark and test the performance of your test suite before and after sharding. Usually, the performance gain is significant for large test suites.
