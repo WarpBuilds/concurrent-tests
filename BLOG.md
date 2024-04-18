@@ -1,12 +1,12 @@
 Running builds and tests are probably the most common use-cases for GitHub Actions. Modern test frameworks and build systems have built-in support for sharding tests and remote execution.  It is essentially running your tests/builds parallely, not only in different threads or cores but distributing them across different machines.
 
-In this guide we present how to set up concurrent tests for some of the most popular test frameworks. We will explore how to set up concurrent tests for Jest, Playwright, Cypress, Pytest, and Golang.
+In this guide we present how to set up concurrent tests for some of the popular test frameworks. We will explore how to set up concurrent tests for Jest, Playwright and Pytest.
 
 # Jest
 
-Jest is a popular JavaScript testing framework. By default, Jest runs tests in parallel using multiple processes which is limited by the systems's CPU. The real upgrade is the [native support for test sharding](https://jestjs.io/docs/cli#--shard) using the `--shard` option to run your tests in parallel across multiple *machines*. The `--shard` option takes an argument in the form of `shardIdx/shardCount`. Where `shardIdx` is a number representing index of the shard and `shardCount` is the total number of shards. By default, Jest will shard or split your test suites alphabetically.
+Jest is a popular JavaScript testing framework. It provides [native support for test sharding](https://jestjs.io/docs/cli#--shard) using the `--shard` option to run your tests in parallel across multiple *machines*. The `--shard` option takes an argument in the form of `shardIdx/shardCount`. Where `shardIdx` is a number representing index of the shard and `shardCount` is the total number of shards. By default, Jest will shard or split your test suites alphabetically.
 
-A [simple benchmark running 100 dummy tests](https://github.com/WarpBuilds/concurrent-tests/actions/runs/8733327759) showed that sharding improves the performance of the test runs from 3 minutes to 30 seconds.
+A [simple benchmark running 100 dummy tests](https://github.com/WarpBuilds/concurrent-tests/actions/runs/8738287628) showed that sharding improves the performance of the test runs from 3 minutes to 30 seconds.
 
 Here's how you can set it up in GitHub Actions:
 
@@ -34,38 +34,11 @@ jobs:
         run: npx jest --shard=${{ matrix.shardIdx }}/${{ matrix.shardCount }}
 ```
 
-# Pytest
-
-Pytest is a widely used testing framework for Python. While it does not have native support for sharding tests across machines, there is a third-party Pytest plugin available called [pytest-split](https://github.com/jerry-git/pytest-split) which distributes tests on the basis of duration or name.
-
-Here's how you can set it up in GitHub Actions:
-
-```yaml
-jobs:
-  test:
-    name: Tests
-    runs-on: warp-ubuntu-latest-x64-4x
-
-    strategy:
-      fail-fast: false
-      matrix:
-        splitCount: [10]
-        group: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-      - run: pip install pytest pytest-split
-
-      - name: Run pytest
-        run: pytest --splits ${{ matrix.splitCount }} --group ${{ matrix.group }}
-```
-
 # Playwright
 
 Playwright is a popular end-to-end automation and testing framework for web applications. Playwright has [native support for test sharding](https://playwright.dev/docs/test-sharding) using the `--shard` option. Just like we saw with Jest earlier, rhe `--shard` option takes an argument in the form of `shardIdx/shardCount`. Where `shardIdx` is the index of the shard and `shardCount` is the total number of shards.
 
-Here's how you can set it up in GitHub Actions:
+The setup is very similar to that of Jest.
 
 ```yaml
 name: CI
@@ -94,6 +67,35 @@ jobs:
         run: npx playwright test --shard=${{ matrix.shardIndex }}/${{ matrix.shardCount }}
 ```
 
+# Pytest
+
+Pytest is a widely used testing framework for Python. While it does not have native support for sharding tests across machines, there is a third-party Pytest plugin available called [pytest-split](https://github.com/jerry-git/pytest-split) which distributes tests on the basis of duration or name.
+
+The performance gain in this case was really significant. The [dummy test runs](https://github.com/WarpBuilds/concurrent-tests/actions/runs/8738290262) showed a 10x improvement in test run times – from 500 to 50 seconds.
+
+The setup is simple and involves installing the `pytest-split` package and running pytest with the `--splits` and `--group` options:
+
+```yaml
+jobs:
+  test:
+    name: Tests
+    runs-on: warp-ubuntu-latest-x64-4x
+
+    strategy:
+      fail-fast: false
+      matrix:
+        splitCount: [10]
+        group: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+      - run: pip install pytest pytest-split
+
+      - name: Run pytest
+        run: pytest --splits ${{ matrix.splitCount }} --group ${{ matrix.group }}
+```
+
 # An annoying limitation
 
 While GitHub actions handles it well, a constraint that can't be ignored for performance is the imposed limit on number of concurrent jobs. GitHub has [a limit of 20 concurrent jobs per account](https://docs.github.com/en/actions/learn-github-actions/usage-limits-billing-and-administration#usage-limits). You can increase this limit to 40 on a pro account or 60 on a team account. But it's still what it is, a limit.
@@ -101,3 +103,8 @@ While GitHub actions handles it well, a constraint that can't be ignored for per
 This limit is annoying because it does not let you take the full advantage of modern test frameworks and build systems that have built-in support for sharding and remote execution[^1]. GitHub Actions limits the number of concurrent jobs you can run thus limiting the parallelization. 
 
 **WarpBuild handles this problem by NOT having any kind of limit on the number of concurrent jobs**. You can run as many jobs as you want. Your tests and builds deserve all the breathing space to run as fast as possible.
+
+> [!NOTE]
+> Even if WarpBuild doesn't impose a concurrency limitation, there is an upstream constraint by GitHub which limits the maximum number of jobs generated by a job matrix to 256. But that limit is seldom the problem in practice.
+
+
