@@ -1,35 +1,12 @@
-# Notes
+# Concurrent tests in GitHub Actions
 
-- GitHub limitations: https://docs.github.com/en/actions/learn-github-actions/usage-limits-billing-and-administration
+This repository is the suplementary material for the blog post [Concurrent tests in GitHub Actions](https://warpbuild.com/blog/concurrent-tests). It contains examples of how to run tests simultaneously on multiple machines using GitHub Actions (sharding tests).
 
-# Concurrent tests
+A summary of the results is presented below:
 
-✅ Explored & example setup
+| Test Framework | Default | Sharded x10 | Improvement | Workflow Run                                                                   |
+| -------------- | ------- | ----------- | ----------- | ------------------------------------------------------------------------------ |
+| Jest           | 3m      | 30s         | 6x          | [Link](https://github.com/WarpBuilds/concurrent-tests/actions/runs/8738287628) |
+| Playwright     | 5m 26s  | 1m 25s      | 3.8x        | [Link](https://github.com/WarpBuilds/concurrent-tests/actions/runs/8740435954) |
+| Pytest         | 8m 20s  | 50s         | 10x         | [Link](https://github.com/WarpBuilds/concurrent-tests/actions/runs/8738290262) |
 
-🚧 More exploration needed
-
-## Jest ✅
-
-- Native sharding: https://jestjs.io/docs/cli#--shard
-- Default sharding is alphabetical
-- If running a custom test sequencer, implement a shard method: https://jestjs.io/docs/configuration#testsequencer-string
-- [3 minutes vs. 30 seconds](https://github.com/WarpBuilds/concurrent-tests/actions/runs/8733327759)
-
-## Playwright ✅
-
-- Native sharding: https://playwright.dev/docs/test-sharding
-- Container approach: https://github.com/microsoft/playwright/issues/23388
-
-## Cypress 🚧
-
-- Native parallelization: https://docs.cypress.io/guides/cloud/smart-orchestration/parallelization#Grouping-to-label-parallelization
-
-## Pytest ✅
-
-- 3rd party package available: https://github.com/jerry-git/pytest-split
-- https://github.com/jerry-git/pytest-split-gh-actions-demo/blob/master/.github/workflows/test.yml
-- Code changes: https://www.edgedb.com/blog/how-we-sharded-our-test-suite-for-10x-faster-runs-on-github-actions
-
-## Golang 🚧
-
-- Test Sharding package by Google's Fuschsia team: https://pkg.go.dev/go.fuchsia.dev/fuchsia/tools/integration/testsharder#section-sourcefiles
