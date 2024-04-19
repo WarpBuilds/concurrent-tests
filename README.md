@@ -1,6 +1,6 @@
 # Concurrent tests in GitHub Actions
 
-This repository is the suplementary material for the blog post [Concurrent tests in GitHub Actions](https://warpbuild.com/blog/concurrent-tests). It contains examples of how to run tests simultaneously on multiple machines using GitHub Actions (sharding tests).
+This repo contains the code, workflows and the runs that are mentioned in the blog post [Concurrent tests in GitHub Actions](https://warpbuild.com/blog/concurrent-tests). It contains examples of how to run tests simultaneously on multiple machines using GitHub Actions (sharding tests).
 
 A summary of the results is presented below:
 
